@@ -1,0 +1,10 @@
+*.mo
+*.pyc
+*.swo
+*.swp
+*.swn
+*~
+build/
+dist/
+docker_cp.egg-info
+MANIFEST
