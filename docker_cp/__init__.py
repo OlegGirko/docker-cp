@@ -7,18 +7,31 @@ import sys
 IO_FACTORY_CLASSES = [StdioIOFactory, DockerIOFactory, TarFileIOFactory]
 
 def create_source(pathname, bufsize=DEFAULT_BUFSIZE):
+  """
+  Create source corresponding to pathname.
+  @param pathname path name of the source
+  @return source object cteated by first factory recognising pathname
+  """
   for cls in IO_FACTORY_CLASSES:
     source = cls.create_source(pathname, bufsize)
     if source is not None:
       return source
 
 def create_destination(pathname, bufsize=DEFAULT_BUFSIZE):
+  """
+  Create destination corresponding to pathname.
+  @param pathname path name of the destination
+  @return destination object cteated by first factory recognising pathname
+  """
   for cls in IO_FACTORY_CLASSES:
     destination = cls.create_destination(pathname, bufsize)
     if destination is not None:
       return destination
 
 def main():
+  """
+  Main function.
+  """
   import argparse
   parser = argparse.ArgumentParser(
     description='Copy files from/to running Docker container',
