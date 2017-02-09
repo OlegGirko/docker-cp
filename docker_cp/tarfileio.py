@@ -87,6 +87,13 @@ class TarFileSource(object):
       self.thread.join()
     return data
 
+  def __iter__(self):
+    while True:
+      data = self.read(self.bufsize)
+      if len(data) == 0:
+        break
+      yield data
+
 class TarFileDestination(Destination):
   """
   Destination object for extracting tar archive to given directory.

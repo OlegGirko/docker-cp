@@ -7,9 +7,11 @@ class IOFactory(metaclass=ABCMeta):
   Abstract factory class for creating source and destination.
   Source is file-like object that contains tar archive data.
   It must provide read(nbytes) method that reads specified number of bytes.
+  Also, it must be iterable, yielding some portion of data on each iteration.
   Source is passive, its read() method is called by Destination's run() method.
   Destination is object that has run(source) method that reads tar archive
-  from source and extracts files into destination specified by its pathname.
+  from source by either using its read() method or iterating over it,
+  and extracts files into destination specified by its pathname.
   """
 
   @classmethod
