@@ -51,7 +51,6 @@ class Destination(metaclass=ABCMeta):
     @param pathname path name of destination where to extract data
     @param bufsize size of input buffer in bytes
     """
-    self.pathname = pathname
     self.bufsize = bufsize
 
   @abstractmethod
