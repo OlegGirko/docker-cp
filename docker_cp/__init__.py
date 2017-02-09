@@ -1,9 +1,10 @@
 from .io import DEFAULT_BUFSIZE
 from .stdioio import StdioIOFactory
+from .dockerio import DockerIOFactory
 from .tarfileio import TarFileIOFactory
 import sys
 
-IO_FACTORY_CLASSES = [StdioIOFactory, TarFileIOFactory]
+IO_FACTORY_CLASSES = [StdioIOFactory, DockerIOFactory, TarFileIOFactory]
 
 def create_source(pathname, bufsize=DEFAULT_BUFSIZE):
   for cls in IO_FACTORY_CLASSES:
@@ -25,9 +26,11 @@ def main():
     epilog="""\
   source can be the following:
     "-" Read tar archive from stdin
+    CONTAINERNAME:PATHNAME file or directory inside the container to copy
     PATHNAME local file or directory to copy
   destination can be the following:
     "-" Write tar archive to stdout
+    CONTAINERNAME:PATHNAME directory inside the container to copy files to
     PATHNAME directory to copy files to
   """)
   parser.add_argument('-v', '--verbose', action='store_true',
