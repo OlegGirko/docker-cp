@@ -16,7 +16,7 @@ class StdioIOFactory(IOFactory):
     @return sys.stdin if pathname is "-", None otherwise
     """
     if pathname == "-":
-      return sys.stdin.buffer
+      return StdioSource(sys.stdin.buffer, bufsize)
 
   @classmethod
   def create_destination(cls, pathname, bufsize=DEFAULT_BUFSIZE):
@@ -28,6 +28,37 @@ class StdioIOFactory(IOFactory):
     """
     if pathname == "-":
       return StdioDestination(bufsize)
+
+class StdioSource(object):
+  """
+  Source object for reading tar archive from stdin.
+  """
+
+  def __init__(self, buffer, bufsize):
+    """
+    Construct source object for reading tar archive to stdout.
+    @param buffer stdin buffer to read raw data from
+    @param bufsize size of output buffer in bytes
+    """
+    self.buffer = buffer
+    self.bufsize = bufsize
+
+  def read(self, nbytes):
+    """
+    Read data from the buffer.
+    """
+    return self.buffer.read(nbytes)
+
+  def __iter__(self):
+    """
+    Iterate through self, reading no more than self.bufsize bytes.
+    @return generator iterator yielding chinks of data read
+    """
+    while True:
+      data = self.read(self.bufsize)
+      if len(data) == 0:
+        break
+      yield data
 
 class StdioDestination(Destination):
   """
