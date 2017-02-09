@@ -92,13 +92,14 @@ class TarFileDestination(Destination):
   Destination object for extracting tar archive to given directory.
   """
 
-  def __init__(self, pathname, *args, **kwargs):
+  def __init__(self, pathname, bufsize):
     """
     Construct destination for extracting tar archive to a directory.
     @param pathname path name of destination where to extract data
+    @param bufsize size of input buffer in bytes
     """
     self.pathname = pathname
-    super(TarFileDestination, self).__init__(pathname, *args, **kwargs)
+    self.bufsize = bufsize
 
   def run(self, source):
     """

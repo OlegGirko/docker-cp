@@ -27,12 +27,19 @@ class StdioIOFactory(IOFactory):
     @return sys.stdout if pathname is "-", None otherwise
     """
     if pathname == "-":
-      return StdioDestination(pathname, bufsize)
+      return StdioDestination(bufsize)
 
 class StdioDestination(Destination):
   """
   Destination object for writing unprocessed tar archive to stdout.
   """
+
+  def __init__(self, bufsize):
+    """
+    Construct destination object for writing unprocessed tar archive to stdout.
+    @param bufsize size of input buffer in bytes
+    """
+    self.bufsize = bufsize
 
   def run(self, source):
     """

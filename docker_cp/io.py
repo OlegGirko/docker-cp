@@ -45,14 +45,6 @@ class Destination(metaclass=ABCMeta):
   Abstract class for Destination object.
   """
 
-  def __init__(self, pathname, bufsize=DEFAULT_BUFSIZE):
-    """
-    Construct data destination.
-    @param pathname path name of destination where to extract data
-    @param bufsize size of input buffer in bytes
-    """
-    self.bufsize = bufsize
-
   @abstractmethod
   def run(self, source):
     """
